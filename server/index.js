@@ -4,7 +4,7 @@ const session = require('express-session');
 const bcrypt = require('bcryptjs');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 
@@ -21,11 +21,11 @@ app.use(
   })
 );
 
-const users = [];
-
-app.get('/api', (req, res) => {
-  res.json({ status: 'Assignment Reminder API is running' });
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
 });
+
+const users = [];
 
 app.post('/api/auth/register', async (req, res) => {
   try {
@@ -86,7 +86,6 @@ app.post('/api/auth/login', async (req, res) => {
     return res.status(500).json({ error: 'Server error during login.' });
   }
 });
-
 
 app.post('/api/auth/logout', (req, res) => {
   req.session.destroy((err) => {
